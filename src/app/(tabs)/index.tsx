@@ -1,14 +1,39 @@
 import {Text, View, StyleSheet, Pressable} from "react-native";
-
+import {useState} from "react";
+import {Calendar} from 'react-native-calendars'
 
 
 export default function Index() {
+
+    const [isCalendarVisible, setCalendarVisible] = useState(false); // State to control Calendar visibility
+    const [isButtonVisible, setButtonVisible] = useState(true);
+    // Function to show the Calendar
+    const showCalendar = () => {
+        setCalendarVisible(true);
+    };
+
+    // Function to hide the Calendar
+    const hideCalendar = () => {
+        setCalendarVisible(false);
+    };
+
+    const hideButton = () => {
+        setButtonVisible(false);
+    }
+
   return (
     <View style={styles.container}>
-        <Pressable style={styles.button}>
+        {isButtonVisible && (
+        <Pressable style={styles.button} onPress={()=>{
+            showCalendar();
+            hideButton();
+        }}>
             <Text style={styles.plusSign}>+</Text>
-        </Pressable>
+        </Pressable>)}
       <Text style={styles.title}>Add New Workout Day</Text>
+        {isCalendarVisible && <Calendar/>}
+
+
     </View>
   );
 }
@@ -24,7 +49,8 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 22,
         fontWeight: '600',
-        marginTop: 20
+        marginTop: 20,
+        marginBottom: 20,
     },
 
     button: {
