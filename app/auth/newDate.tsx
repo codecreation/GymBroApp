@@ -1,12 +1,16 @@
-import {Text, View, StyleSheet, Pressable} from "react-native";
 import {useState} from "react";
-import {Calendar} from 'react-native-calendars'
+import {Pressable, Text, View, StyleSheet} from "react-native";
+import {Calendar} from "react-native-calendars";
+import {set} from "@firebase/database";
+import {FIREBASE_AUTH, reference} from "@/FirebaseConfig";
+import {email} from "@sideway/address";
 
 
-export default function Index() {
+const NewDate = () => {
 
     const [isCalendarVisible, setCalendarVisible] = useState(false); // State to control Calendar visibility
     const [isButtonVisible, setButtonVisible] = useState(true);
+
     // Function to show the Calendar
     const showCalendar = () => {
         setCalendarVisible(true);
@@ -21,22 +25,28 @@ export default function Index() {
         setButtonVisible(false);
     }
 
-  return (
-    <View style={styles.container}>
-        {isButtonVisible && (
-        <Pressable style={styles.button} onPress={()=>{
-            showCalendar();
-            hideButton();
-        }}>
-            <Text style={styles.plusSign}>+</Text>
-        </Pressable>)}
-      <Text style={styles.title}>Add New Workout Day</Text>
-        {isCalendarVisible && <Calendar/>}
+
+    return (
+        <View style={styles.container}>
+            {isButtonVisible && (
+                <Pressable style={styles.button} onPress={()=>{
+                    showCalendar();
+                    hideButton();
+                }}>
+                    <Text style={styles.plusSign}>+</Text>
+                </Pressable>)}
+            <Text style={styles.title}>Add New Workout Day</Text>
+            {isCalendarVisible && <Calendar/>}
 
 
-    </View>
-  );
+
+
+        </View>
+    );
 }
+
+
+export default NewDate;
 
 
 
@@ -65,6 +75,7 @@ const styles = StyleSheet.create({
 
     plusSign:{
         fontSize: 30,
+        fontWeight: 'bold',
         color: 'white',
     },
 
